@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 4</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div id="app" class="container">
+      <div class="mb-2 lead p-4">
+        Задача 4. Вивести список як маркований список з елементами у форматі
+        (name: salary)
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Salary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(worker, index) in getWorkersList"
+            :key="getWorkersList.id"
+          >
+            <th scope="row">{{index+1}}</th>
+            <td>{{worker.name}}</td>
+            <td>{{worker.salary}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      const {createApp} = Vue
+      const workersList = [
+        {id: 1, name: 'Іван', salary: 50000},
+        {id: 2, name: 'Марія', salary: 60000},
+        {id: 3, name: 'Петро', salary: 55000},
+        {id: 4, name: 'Оксана', salary: 52000},
+      ]
+
+      createApp({
+        data() {
+          return {}
+        },
+        computed: {
+          getWorkersList() {
+            return workersList
+          },
+        },
+        methods: {},
+      }).mount('#app')
+    </script>
+  </body>
+</html>

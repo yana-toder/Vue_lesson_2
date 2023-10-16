@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <style>
+      .min-height {
+        min-height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="mb-2 lead p-4">
+        Задача 6. Задача. На кухню поступають замовлення. Спочатку ми додаємо їх
+        у список “Очікують на виконання”, якщо повар береться робити —
+        замовлення переходить у список “Виконуються”, якщо замовлення виконано —
+        переходить у список “Готові до виносу”. Якщо натиснути на “Подано” -
+        страва зникає з таблиці
+      </div>
+      <div>
+        <div class="input-group mb-3">
+          <p class="lead me-2">Нова замовлена страва</p>
+          <input type="text" class="form-control" v-model="newDish" />
+          <button type="button" class="btn btn-primary" @click="addDish">
+            Додати
+          </button>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col border border-3 border-danger me-1 min-height">
+            <span class="border-bottom border-4">Очікують на виконання</span>
+            <div
+              class="d-flex justify-content-between p-1"
+              v-for="(dishWait, index) in waitingList"
+              :key="index"
+            >
+              <div class="row">{{dishWait}}</div>
+              <button type="button" class="btn" @click="addToProcess(index)">
+                ➡️
+              </button>
+            </div>
+          </div>
+          <div class="col border border-3 border-warning me-1 min-height">
+            <span class="border-bottom border-4 mh-25">Виконується</span>
+            <div
+              class="d-flex justify-content-between p-1"
+              v-for="(dishProcess, index) in processingList"
+              :key="index"
+            >
+              <div class="row">{{dishProcess}}</div>
+              <button type="button" class="btn" @click="addToCompleted(index)">
+                ➡️
+              </button>
+            </div>
+          </div>
+          <div class="col border border-3 border-success min-height">
+            <span class="border-bottom border-4">Готові до виносу</span>
+            <div
+              class="d-flex justify-content-between p-1"
+              v-for="(dishComplet, index) in completedList"
+              :key="index"
+            >
+              <div class="row">{{dishComplet}}</div>
+              <button type="button" class="btn" @click="removeFromList(index)">
+                ➡️
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const {createApp} = Vue
+      //waitingList, processingList, completedList
+      //const waitingList = ['суп', 'гречка']
+      //const processingList = ['борщ', 'бульйон']
+      //const completedList = ['десерт', 'торт']
+
+      createApp({
+        data() {
+          return {
+            newDish: null,
+            waitingList: ['борщ', 'голубці'],
+            processingList: [],
+            completedList: [],
+          }
+        },
+        computed: {
+          // getwaitingList() {
+          //   return waitingList
+          // },
+          // getProcessList() {
+          //   return processingList
+          // },
+          // getCompletedList() {
+          //   return completedList
+          // },
+        },
+        methods: {
+          addDish() {
+            this.waitingList.push(this.newDish)
+            this.newDish = null
+          },
+          addToProcess(index) {
+            this.processingList.push(this.waitingList[index])
+            this.waitingList.splice(index, 1)
+          },
+          addToCompleted(index) {
+            this.completedList.push(this.processingList[index])
+            this.processingList.splice(index, 1)
+          },
+          removeFromList(index) {
+            this.completedList.splice(index, 1)
+          },
+        },
+      }).mount('#app')
+    </script>
+  </body>
+</html>

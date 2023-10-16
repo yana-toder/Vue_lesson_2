@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task_1</title>
+	 <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+      .error-ivan {
+        background-color: blue;
+		  color: #fff;
+      }
+      .error {
+        background-color: red;
+		  color: #fff;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <div class="mb-2 lead p-4">
+        
+          Вводимо логіна і пароль. Якщо логін вірний відображаємо смайл. Якщо
+          ні, то: 1) якщо логін = Іван – колір повідомлення про помилку синій 2)
+          якщо хтось інший, то колір повідомлення червоний
+		</div>
+        <form action="#" >
+          <div>
+            <label for="username">Login</label>
+            <input class="form-control" type="text" v-model="login" />
+          </div>
+          <div class="mb-2">
+            <label for="password">Password</label>
+            <input class="form-control"
+              type="password"
+              id="password"
+              name="password"
+              v-model="password"
+            />
+          </div>
+          <button class="btn btn-primary" type="button" @click="checkLogin">Go</button>
+        </form>
+        <div v-if="loggedIn">😉</div>
+        <div :class="colorErrorMassage" v-else >{{errorMassage}}</div>
+      </div>
+    </div>
+
+    <script>
+      const {createApp} = Vue
+
+      const userList = [
+        {name: 'user1', password: 'password1'},
+        {name: 'user2', password: 'password2'},
+        {name: 'user3', password: 'password3'},
+      ]
+		const massagesList =[
+			'Логін тільки латинськими літерами',
+			'Невірний логін або пароль'
+		]
+
+      createApp({
+        data() {
+          return {
+            login: null,
+            password: null,
+            loggedIn: false,
+				colorErrorMassage: null,
+				errorMassage:null,
+          }
+        },
+        computed: {
+          getUserList() {
+            return userList
+          },
+			 getMassageList() {
+				return massagesList
+			 },
+        
+		
+			},
+			methods: {
+			  checkLogin() {
+			  let isRegistered = this.getUserList.find(user => user.name === this.login && user.password === this.password)
+				 if (this.login === 'Іван') {
+					this.colorErrorMassage='error-ivan'
+					this.errorMassage=this.getMassageList[0]
+				 }
+				 else if(!isRegistered) {
+					this.colorErrorMassage='error'
+					this.errorMassage=this.getMassageList[1]
+				 }
+				 else this.loggedIn=true
+			  },
+			},
+      }).mount('#app')
+    </script>
+    <!--<!DOCTYPE html>
+    <html>-->
+      <!--<head>
+        <title>Vue.js Login Example</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+      </head>
+      <body>
+        <div id="app">
+          <input v-model="username" type="text" placeholder="Логін" />
+          <input v-model="password" type="password" placeholder="Пароль" />
+          <button @click="checkLogin">Увійти</button>
+
+          <div v-if="loggedIn">
+            <span class="smiley">😊</span>
+          </div>
+
+          <div v-else>
+            <div
+              :class="{'error-message': username === 'Іван', 'error-message-red': username !== 'Іван'}"
+            >
+              {{ errorMessage }}
+            </div>
+          </div>
+        </div>
+
+        <style>
+          .error-message {
+            color: blue;
+          }
+
+          .error-message-red {
+            color: red;
+          }
+
+          .smiley {
+            font-size: 36px;
+          }
+        </style>
+
+        <script>
+          new Vue({
+            el: '#app',
+            data: {
+              username: '',
+              password: '',
+              loggedIn: false,
+            },
+            computed: {
+              errorMessage: function () {
+                if (this.username === 'Іван') {
+                  return 'Помилка: Логін Іван. Введіть правильний логін.'
+                } else {
+                  return 'Помилка: Введений логін невірний.'
+                }
+              },
+            },
+            methods: {
+              checkLogin: function () {
+                // Тут ви можете виконати перевірку логіна і паролю
+                // Якщо логін і пароль вірні, встановити this.loggedIn на true
+                // В іншому випадку залишити його false
+              },
+            },
+          })
+        </script>
+      </body>-->
+    </html>
+  </body>
+</html>

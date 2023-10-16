@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task_2</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <div class="mb-2 lead p-4">
+        Задача 2. З випадаючого списку вибираємо клас квитка у літаку. Якщо 1)
+        бізнес - виводимо елементи для вибору газети та коньяку (якщо вибрано
+        коньяк, то запропонувати закуску (так/ні)), на фоні зображення бізнес
+        кают 2) економ – виводимо елементи для вибору типу пива і чипсів, на
+        фоні хмарки.
+      </div>
+      <div>
+        <div class="dropdown mb-2">
+          <h2>Оберіть квиток</h2>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            v-model="selectedTicket"
+          >
+            <option disabled>Будь ласка виберіть тип квитка</option>
+            <option value="businessClass">Business Class</option>
+            <option value="economClass">Econom Class</option>
+          </select>
+        </div>
+        <!--------Business Class--------->
+
+        <div v-if="selectedTicket==='businessClass'">
+          <input type="radio" id="one" />
+          <label for="newspaper">Газета</label>
+
+          <input type="radio" id="two" @click="selectedCognac" />
+          <label for="cognac">Коньяк</label>
+
+          <!--selected cognac-->
+          <div v-if="isCognac">
+            <div>
+              <img src="./img/plain.jpg" alt="plain" />
+            </div>
+            Бажаєте закуску?
+            <button type="button" @click="selectedSnack">Так 👍</button>
+            <button type="button" @click="dontSelectedSnack">Ні 👎</button>
+            <div>{{message}}</div>
+          </div>
+        </div>
+
+        <!--------Econom Class--------->
+
+        <div v-else-if="selectedTicket==='economClass'">
+          <input type="radio" id="one" value="beer" @click="selectedBeer" />
+          <label for="beer">Пиво</label>
+
+          <input type="radio" id="two" value="chips" @click="selectedChips" />
+          <label for="chips">Чіпси</label>
+          <!--selected Beer-->
+          <div v-if="isBeer">
+            <img src="./img/cloud.jpg" alt="cloud" />
+            Оберіть яке пиво бажаєте
+            <button type="button" @click="showMassage">Пшеничне 🍺</button>
+            <button type="button" @click="showMassage">Темне 🍺</button>
+            <div>{{message}}</div>
+          </div>
+          <!--selected Chips-->
+          <div v-else-if="isChips">
+            <img src="./img/cloud.jpg" alt="cloud" />
+            Оберіть які чіпси бажаєте
+            <button type="button" @click="selectedTypeChips">З сіллю 🧂</button>
+            <button type="button" @click="selectedTypeChips">З сиром 🧀</button>
+            <div>{{message}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const {createApp} = Vue
+      const messages = [
+        'Дякуємо за ваш вибір закуски!',
+        'Зверніться до наших бортових співробітників, якщо згодом ви захочете закуску.',
+        'Дякуємо за ваше замовлення пива. Ми доставимо його вам найближчим часом. Насолоджуйтеся польотом!',
+        'Ваше замовлення чіпсів прийнято. Очікуйте їх на вашому місці. Бажаємо приємного перельоту!',
+      ]
+
+      createApp({
+        data() {
+          return {
+            selectedTicket: '',
+            isCognac: false,
+            isBeer: false,
+            isChips: false,
+            message: null,
+          }
+        },
+        computed: {
+          getMassageList() {
+            return messages
+          },
+        },
+        methods: {
+          selectedCognac() {
+            this.isCognac = true
+          },
+          selectedSnack() {
+            this.message = this.getMassageList[0]
+          },
+          dontSelectedSnack() {
+            this.message = this.getMassageList[1]
+          },
+          selectedBeer() {
+            this.isBeer = true
+          },
+          showMassage() {
+            this.message = this.getMassageList[2]
+          },
+          selectedChips() {
+            this.isChips = true
+          },
+          selectedTypeChips() {
+            this.message = this.getMassageList[3]
+          },
+        },
+      }).mount('#app')
+    </script>
+  </body>
+</html>

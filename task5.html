@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 4</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <style></style>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <div class="mb-2 lead p-4">
+        Задача 5. Самостійно сформуйте масив даних та виведіть фрагмент на
+        зразок поданого (дані не обов’язково повинні співпадати)
+      </div>
+      <div v-for="webSite in getWebsitesList" :key="getWebsitesList.id" class="border border-5 rounded-3 mb-2">
+        <div class="col-4 p-3">
+          <img :src="webSite.image" alt="image" class="rounded-circle"/>
+			 <div class="col-8">
+
+				 <h4>{{webSite.websiteName}}</h4>
+				 <span> {{webSite. breadcrumps[0]}}>{{webSite. breadcrumps[1]}}</span>
+			 </div>
+        </div>
+        <a class="text-body fs-3" :href="webSite.link"> {{webSite.title}}</a>
+		 <p> {{webSite.description}}</p>
+        
+        </ol>
+      </div>
+    </div>
+    <script>
+      const {createApp} = Vue
+      const websitesList = [
+        {
+          id: 1,
+          image: './img/1.png',
+          websiteName: 'Vue.js',
+          breadcrumps: ['https://vuejs.org'],
+          link: 'https://vuejs.org/',
+          title: 'Vue.js - The Progressive JavaScript Framework | Vue.js',
+          description:
+            'Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation. · Performant. Truly reactive, compiler- ...',
+        },
+        {
+          id: 2,
+          image: './img/2.png',
+          websiteName: 'Wikipedia',
+          breadcrumps: ['https://cs.wikipedia.org', 'wiki'],
+          link: 'https://cs.wikipedia.org/wiki/Vue.js',
+          title: 'Vue.js',
+          description:
+            'Vue je reaktivní systém který používá čisté JavaScript objekty a optimalizovaný proces znovu renderování. Každá komponenta si udržuje stav jejích reaktivních ...',
+        },
+        {
+          id: 3,
+          image: './img/3.png',
+          websiteName: 'W3schools',
+          breadcrumps: ['https://www.w3schools.com', '...'],
+          link: 'https://www.w3schools.com/whatis/whatis_vue.asp',
+          title: 'What is Vue.js',
+          description:
+            'Vue.js provides built-in directives and user defined directives. For a full Vue.js tutorial: Go to our Vue.js Tutorial ❯. Vue.js Directives. Vue.js uses ...',
+        },
+        {
+          id: 4,
+          image: './img/4.png',
+          websiteName: 'GitHub',
+          breadcrumps: ['https://github.com/vuejs/vue', 'vuejs'],
+          link: 'https://github.com/vuejs/vue',
+          title: 'This repo is for Vue 2',
+          description:
+            'Vue (pronounced /vjuː/ , like view) is a progressive framework for building user interfaces. It is designed from the ground up to be incrementally adoptable, ...',
+        },
+      ]
+
+      createApp({
+        data() {
+          return {}
+        },
+        computed: {
+          getWebsitesList() {
+            return websitesList
+          },
+        },
+        methods: {},
+      }).mount('#app')
+    </script>
+  </body>
+</html>
